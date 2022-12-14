@@ -12,7 +12,7 @@ class Auth extends BaseController
 
     public function login()
     {
-        return view('templates/login.html');
+        return view('login');
     }
 
     public function login_submit()
@@ -35,15 +35,15 @@ class Auth extends BaseController
         } else {
 
             //check username & password enkripsi terdaftar di database
-            $encrypt_password = sha1($password);
-            $data = $this->UserModel->select('id, username, tipe, id_user')->where('username', $username)->where('password', $password)->first();
+            // $encrypt_password = sha1($password);
+            $data = $this->UserModel->select('id, username,password, tipe')->where('username', $username)->where('password', $password)->first();
             
             if ($data) {
                 //membuat session
                 session()->set([
                     'username' => $data['username'],
                     'tipe' => $data['tipe'],
-                    'petugas_id' => $data['petugas_id'],
+                    'id' => $data['id'],
                     'is_login' => TRUE
                 ]);
 
@@ -51,7 +51,7 @@ class Auth extends BaseController
                 if($data['tipe'] == 'admin') {
                     return redirect()->to('/admin');
 
-                //jika tipe user : petugas
+                //jika tipe user : customers
                 } else {
                     return redirect()->to('/');
                 }

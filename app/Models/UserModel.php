@@ -2,7 +2,7 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class userModel extends Model
+class UserModel extends Model
 {
     protected $table = 'user';
     protected $allowedFields = ['id','username','password','tipe'];
